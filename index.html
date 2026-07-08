@@ -105,7 +105,7 @@
   .script-card.open .script-chevron { transform: rotate(180deg); }
   
   .script-body { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; }
-  .script-card.open .script-body { max-height: 1200px; }
+  .script-card.open .script-body { max-height: 70vh; overflow-y:auto; }
   
   .copy-code-btn {
     position: absolute; top: 12px; right: 24px; z-index: 20;
@@ -816,20 +816,24 @@ return module</code></pre>
 lucide.createIcons();
 
 const html = document.documentElement;
-const themeToggle = document.getElementById('theme-toggle');
-const sunIcon = document.getElementById('icon-sun');
-const moonIcon = document.getElementById('icon-moon');
+const themeToggle=document.getElementById('theme-toggle');
+const sunIcon=document.getElementById('icon-sun');
+const moonIcon=document.getElementById('icon-moon');
 
-function applyTheme(theme) {
-  html.setAttribute('data-theme', theme);
-  sunIcon.style.display = theme === 'dark' ? 'none' : 'block';
-  moonIcon.style.display = theme === 'dark' ? 'block' : 'none';
+
+if(themeToggle){
+function applyTheme(theme){
+  html.setAttribute('data-theme',theme);
+  if(sunIcon) sunIcon.style.display=theme==='dark'?'none':'block';
+  if(moonIcon) moonIcon.style.display=theme==='dark'?'block':'none';
 }
-
-themeToggle.addEventListener('click', () => {
-  const current = html.getAttribute('data-theme');
-  applyTheme(current === 'dark' ? 'light' : 'dark');
+themeToggle.addEventListener('click',()=>{
+ const current=html.getAttribute('data-theme');
+ applyTheme(current==='dark'?'light':'dark');
 });
+} else {
+function applyTheme(theme){ html.setAttribute('data-theme',theme); }
+}
 
 function copyToClipboard(text, element) {
   navigator.clipboard.writeText(text).then(() => {
@@ -849,7 +853,7 @@ document.querySelectorAll('.copy-roblox').forEach(el => {
 
 document.querySelectorAll('.script-card').forEach(card => {
   card.querySelector('.script-header').addEventListener('click', () => {
-    card.classList.toggle('open');
+    card.classList.toggle('open');requestAnimationFrame(()=>{const b=card.querySelector('.script-body');if(card.classList.contains('open')) b.scrollTop=0;});
   });
 });
 
