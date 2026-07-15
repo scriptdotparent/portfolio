@@ -133,12 +133,263 @@
     100% { transform: rotateX(15deg) rotateY(360deg); }
   }
 
+  /* ===== LANDING SCREEN ===== */
+  .landing-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background: url('https://raw.githubusercontent.com/6px7/portfolio/main/image.png') center center / cover no-repeat;
+    filter: blur(6px);
+    animation: slowZoom 20s ease-in-out infinite alternate;
+    pointer-events: none;
+  }
+  .landing-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.35) 50%, rgba(0,0,0,0.7) 100%);
+  }
+  .landing-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    box-shadow: inset 0 0 120px rgba(0,0,0,0.6);
+    z-index: 2;
+  }
+  @keyframes slowZoom {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.02); }
+  }
+
+  .portfolio-gate {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: transparent;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+  }
+  .portfolio-gate[hidden] {
+    display: flex !important;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .gate-inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    padding: 0 24px;
+    max-width: 520px;
+    width: 100%;
+  }
+
+  .gate-title {
+    font-size: 40px;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    color: #fff;
+    opacity: 0;
+    transform: translateY(12px);
+    animation: fadeUpIn 0.7s ease 0.1s forwards;
+    line-height: 1.15;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+  }
+
+  .gate-subtitle {
+    font-size: 16px;
+    color: rgba(255,255,255,0.55);
+    margin-top: 12px;
+    font-weight: 400;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeUpIn 0.6s ease 0.4s forwards;
+  }
+
+  .gate-actions {
+    display: flex;
+    gap: 16px;
+    margin-top: 36px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .gate-choice {
+    position: relative;
+    border: 1px solid rgba(255,255,255,0.18);
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: #fff;
+    border-radius: 8px;
+    padding: 16px 40px;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: 0.01em;
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+    opacity: 0;
+    transform: translateY(14px);
+    min-width: 160px;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    overflow: hidden;
+  }
+  .gate-choice:nth-child(1) {
+    animation: fadeUpIn 0.5s ease 0.7s forwards;
+  }
+  .gate-choice:nth-child(2) {
+    animation: fadeUpIn 0.5s ease 0.95s forwards;
+  }
+  .gate-choice:hover {
+    transform: translateY(-3px) scale(1.02);
+    border-color: rgba(255,255,255,0.4);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3), 0 0 20px rgba(255,255,255,0.05);
+    background: rgba(255,255,255,0.1);
+  }
+  .gate-choice:active {
+    transform: translateY(-1px) scale(1.01);
+  }
+  .gate-choice.success {
+    transform: scale(0.96);
+    border-color: rgba(255,255,255,0.5);
+  }
+
+  /* Dotted hold animation */
+  .gate-choice .dot-track {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    display: flex;
+    gap: 3px;
+    padding: 0 12px;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+  .gate-choice.holding .dot-track {
+    opacity: 1;
+  }
+  .gate-choice .dot-track .dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    flex-shrink: 0;
+    transition: background 0.1s ease;
+  }
+  .gate-choice .dot-track .dot.filled {
+    background: #fff;
+    box-shadow: 0 0 6px rgba(255,255,255,0.4);
+  }
+
+  @keyframes fadeUpIn {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* ===== UX GALLERY ===== */
+  .ux-gallery {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    margin: 24px 0 28px;
+  }
+  .ux-shot {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: var(--card-bg);
+    cursor: zoom-in;
+    padding: 0;
+  }
+  .ux-shot img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    transition: transform 0.25s ease, filter 0.25s ease;
+  }
+  .ux-shot:hover img { transform: scale(1.025); filter: brightness(0.72); }
+  .ux-expand {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    opacity: 0;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    transition: opacity 0.2s;
+    pointer-events: none;
+  }
+  .ux-shot:hover .ux-expand { opacity: 1; }
+  .show-more {
+    display: block;
+    margin: 0 auto 80px;
+    border: 1px solid var(--border);
+    background: var(--card-bg);
+    color: var(--text);
+    padding: 12px 22px;
+    border-radius: 10px;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .show-more:hover { opacity: 0.8; }
+  .show-more[hidden] { display: none; }
+  .page-signoff {
+    text-align: center;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    padding: 12px 0 8px;
+  }
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.92);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    cursor: zoom-out;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img {
+    max-width: 96vw;
+    max-height: 94vh;
+    object-fit: contain;
+    border-radius: 10px;
+  }
+
   @media (max-width: 768px) {
     nav { padding: 16px 24px; }
     .nav-links { display: none; }
     .floating-container { display: none; }
     .intro h1 { font-size: 32px; }
     .cta-group { flex-direction: column; }
+    .gate-actions { flex-direction: column; align-items: center; }
+    .gate-choice { min-width: 200px; padding: 16px 32px; }
+    .gate-title { font-size: 32px; }
+    .ux-gallery { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -148,9 +399,39 @@
   <div class="rotating-text">@6px7</div>
 </div>
 
+<!-- Landing Background -->
+<div id="landing-bg" class="landing-bg"></div>
+
 <main>
-  <div class="badge"><i data-lucide="circle" fill="currentColor" width="8"></i> Open for Commissions</div>
-  
+
+  <section id="portfolio-gate" class="portfolio-gate">
+    <div class="gate-inner">
+      <h1 class="gate-title">What are you interested in bby?</h1>
+      <p class="gate-subtitle">Hodda the buttonings to enter kind sar</p>
+      <div class="gate-actions">
+        <button class="gate-choice" data-view="ux">
+          UX / UI
+          <span class="dot-track"></span>
+        </button>
+        <button class="gate-choice" data-view="script">
+          Scripts
+          <span class="dot-track"></span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section id="ux-view" class="portfolio-view" hidden>
+    <div class="intro">
+      <h1>UX / UI work ;)</h1>
+      <p>A few interface screenshots. Hover a shot and click it to expand.</p>
+    </div>
+    <div id="ux-gallery" class="ux-gallery"></div>
+    <button id="show-more-ux" class="show-more" type="button">Show more</button>
+    <div class="page-signoff">hi ;)</div>
+  </section>
+
+  <section id="script-view" class="portfolio-view" hidden>
   <div class="intro">
     <h1>My portfolio ;)</h1>
     <p>I'm a 16 year old hungarian lua and python programminger. I'm good at:</p>
@@ -808,12 +1089,1267 @@ return module</code></pre>
     </div>
   </div>
 
+    <span class="section-label">Secret project</span>
+    <p class="script-group-desc">Unreleased so I won't snitch.</p>
+
+    <div class="scripts-list">
+      <div class="script-card">
+        <div class="script-header">
+          <div class="script-icon"><i data-lucide="fish" color="#fff" width="18"></i></div>
+          <div class="script-title">PondDropClientVisualRuntime.lua</div>
+          <i data-lucide="chevron-down" class="script-chevron" width="16"></i>
+        </div>
+        <div class="script-body">
+          <button class="copy-code-btn">Copy Code</button>
+          <pre><code class="language-lua">local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local TweenService = game:GetService("TweenService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local player = Players.LocalPlayer
+local shared = require(ReplicatedStorage:WaitForChild("assets"):WaitForChild("Shared"):WaitForChild("PondDropSharedRuntime"))
+
+local module = {}
+local updateSellUiRows
+
+local state = {
+	busy = false,
+	active = false,
+	boundTools = {},
+	rewardQueue = { "martin fish", "Sziszi fish" },
+	cameraType = nil,
+	cameraSubject = nil,
+	cameraCFrame = nil,
+	renderConnection = nil,
+	shopBound = false,
+	sellBound = false,
+	remoteBound = false,
+	fadeGui = nil,
+	fadeFrame = nil,
+	fadeTween = nil,
+	pendingReward = nil,
+	sellState = {},
+	activeToolName = nil,
+	lastRingCFrame = nil,
+	activeModel = nil,
+	modelPivotValue = nil,
+	modelPivotConnection = nil,
+	modelTween = nil,
+	cameraAimValue = nil,
+	cameraAimConnection = nil,
+	cameraAimTween = nil,
+}
+
+local function getPlayerGui()
+	return player:WaitForChild("PlayerGui")
+end
+
+local function getUiRefs()
+	local coretest = getPlayerGui():WaitForChild("coretest")
+	local rewardPanel = coretest:WaitForChild("fishreward")
+	local rewardFrame = rewardPanel:WaitForChild("Frame")
+	local shopRefresh = coretest:WaitForChild("shoprefresh")
+	local shopItem = shopRefresh:WaitForChild("fire cracker")
+	local sellUi = coretest:WaitForChild("sellui")
+
+	return {
+		backButton = coretest:WaitForChild("back | abovepond"),
+		rewardPanel = rewardPanel,
+		rewardFrame = rewardFrame,
+		rewardTemplate = rewardFrame:WaitForChild("examplefish"),
+		purchaseButton = shopItem:WaitForChild("purchasebutton"),
+		stockLabel = shopItem:WaitForChild("stock"),
+		sellUi = sellUi,
+	}
+end
+
+local function cancelTween(tween)
+	if tween then
+		tween:Cancel()
+	end
+end
+
+local function destroyDriver(valueObject, connection)
+	if connection then
+		connection:Disconnect()
+	end
+	if valueObject then
+		valueObject:Destroy()
+	end
+end
+
+local function cancelFadeTween()
+	if state.fadeTween then
+		state.fadeTween:Cancel()
+		state.fadeTween = nil
+	end
+end
+
+local function ensureOverlay()
+	if state.fadeGui and state.fadeGui.Parent and state.fadeFrame and state.fadeFrame.Parent then
+		return
+	end
+
+	local playerGui = getPlayerGui()
+	for _, child in ipairs(playerGui:GetChildren()) do
+		if child:IsA("ScreenGui") and child.Name == "PondFadeGui" then
+			child:Destroy()
+		end
+	end
+
+	local fadeGui = Instance.new("ScreenGui")
+	fadeGui.Name = "PondFadeGui"
+	fadeGui.IgnoreGuiInset = true
+	fadeGui.ResetOnSpawn = false
+	fadeGui.DisplayOrder = 9999
+	fadeGui.Parent = playerGui
+
+	local fadeFrame = Instance.new("Frame")
+	fadeFrame.Name = "Fade"
+	fadeFrame.BorderSizePixel = 0
+	fadeFrame.BackgroundColor3 = Color3.new(0, 0, 0)
+	fadeFrame.BackgroundTransparency = 1
+	fadeFrame.Visible = false
+	fadeFrame.Size = UDim2.fromScale(1, 1)
+	fadeFrame.Parent = fadeGui
+
+	state.fadeGui = fadeGui
+	state.fadeFrame = fadeFrame
+end
+
+local function hideFadeInstant()
+	ensureOverlay()
+	cancelFadeTween()
+	state.fadeFrame.BackgroundTransparency = 1
+	state.fadeFrame.Visible = false
+end
+
+local function tweenFade(targetTransparency, duration)
+	ensureOverlay()
+	cancelFadeTween()
+	state.fadeFrame.Visible = true
+	state.fadeTween = TweenService:Create(state.fadeFrame, TweenInfo.new(duration or shared.FadeSeconds, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		BackgroundTransparency = targetTransparency,
+	})
+	state.fadeTween:Play()
+	state.fadeTween.Completed:Wait()
+	state.fadeTween = nil
+	state.fadeFrame.BackgroundTransparency = targetTransparency
+	if targetTransparency >= 1 then
+		state.fadeFrame.Visible = false
+	end
+end
+
+local function setCoreUi(backVisible, rewardVisible)
+	local ui = getUiRefs()
+	ui.backButton.Visible = backVisible
+	ui.rewardPanel.Visible = rewardVisible
+	ui.rewardFrame.Visible = rewardVisible
+	return ui
+end
+
+local function hidePondUi()
+	setCoreUi(false, false)
+end
+
+local function collectGuiObjects(root)
+	local objects = { root }
+	for _, child in ipairs(root:GetDescendants()) do
+		objects[#objects + 1] = child
+	end
+	return objects
+end
+
+local function setGuiTreeTransparency(root, transparency)
+	for _, object in ipairs(collectGuiObjects(root)) do
+		if object:IsA("Frame") then
+			object.BackgroundTransparency = transparency
+		elseif object:IsA("TextLabel") or object:IsA("TextButton") then
+			object.TextTransparency = transparency
+			object.TextStrokeTransparency = 1
+		elseif object:IsA("ImageLabel") or object:IsA("ImageButton") then
+			object.ImageTransparency = transparency
+		end
+	end
+end
+
+local function tweenGuiTree(root, transparency, duration)
+	local tweens = {}
+	for _, object in ipairs(collectGuiObjects(root)) do
+		if object:IsA("Frame") then
+			tweens[#tweens + 1] = TweenService:Create(object, TweenInfo.new(duration, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { BackgroundTransparency = transparency })
+		elseif object:IsA("TextLabel") or object:IsA("TextButton") then
+			tweens[#tweens + 1] = TweenService:Create(object, TweenInfo.new(duration, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { TextTransparency = transparency, TextStrokeTransparency = 1 })
+		elseif object:IsA("ImageLabel") or object:IsA("ImageButton") then
+			tweens[#tweens + 1] = TweenService:Create(object, TweenInfo.new(duration, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { ImageTransparency = transparency })
+		end
+	end
+	for _, tween in ipairs(tweens) do
+		tween:Play()
+	end
+	if duration > 0 then
+		task.wait(duration)
+	end
+end
+
+local function clearRewardCards(container, template)
+	for _, child in ipairs(container:GetChildren()) do
+		if child:IsA("Frame") and child ~= template then
+			child:Destroy()
+		end
+	end
+	template.Visible = false
+end
+
+local function waitForReward(timeoutSeconds)
+	local startedAt = os.clock()
+	while not state.pendingReward and (os.clock() - startedAt) < timeoutSeconds do
+		task.wait()
+	end
+	if state.pendingReward then
+		state.rewardQueue = state.pendingReward
+		state.pendingReward = nil
+	end
+end
+
+local function showRewardCards()
+	local ui = setCoreUi(false, true)
+	local container = ui.rewardFrame
+	local template = ui.rewardTemplate
+	clearRewardCards(container, template)
+	setGuiTreeTransparency(container, 1)
+	container.Visible = true
+
+	local cards = {}
+	for index = 1, math.min(shared.RewardCardCount, #state.rewardQueue) do
+		local card = template:Clone()
+		card.Name = "examplefish_" .. tostring(index)
+		card.Visible = true
+		card.Parent = container
+		setGuiTreeTransparency(card, 1)
+		local label = card:FindFirstChild("fishnamelabellll", true)
+		if label and label:IsA("TextLabel") then
+			label.Text = state.rewardQueue[index]
+		end
+		cards[#cards + 1] = card
+	end
+
+	for _, card in ipairs(cards) do
+		tweenGuiTree(card, 0, 0.2)
+		task.wait(shared.RewardCardStagger)
+	end
+
+	task.wait(shared.RewardHoldSeconds)
+	tweenGuiTree(container, 1, shared.FadeSeconds)
+	hidePondUi()
+	clearRewardCards(container, template)
+	state.rewardQueue = { "martin fish", "Sziszi fish" }
+end
+
+local function clampToWater(worldPosition)
+	local water = shared.WaterPart
+	local ring = shared.DropRing
+	local localPoint = water.CFrame:PointToObjectSpace(worldPosition)
+	local halfSize = water.Size * 0.5
+	local ringRadiusX = ring.Size.X * 0.5
+	local ringRadiusZ = ring.Size.Z * 0.5
+	local x = math.clamp(localPoint.X, -halfSize.X + ringRadiusX, halfSize.X - ringRadiusX)
+	local z = math.clamp(localPoint.Z, -halfSize.Z + ringRadiusZ, halfSize.Z - ringRadiusZ)
+	local y = halfSize.Y + (ring.Size.Y * 0.5) + 0.03
+	return water.CFrame:PointToWorldSpace(Vector3.new(x, y, z))
+end
+
+local function getMouseTargetPosition(camera)
+	local mouse = player:GetMouse()
+	local unitRay = camera:ScreenPointToRay(mouse.X, mouse.Y)
+	local params = RaycastParams.new()
+	params.FilterType = Enum.RaycastFilterType.Exclude
+	params.FilterDescendantsInstances = { player.Character, shared.DropRing }
+	params.IgnoreWater = false
+	local result = workspace:Raycast(unitRay.Origin, unitRay.Direction * shared.MaxFollowDistance, params)
+	return result and result.Position or (unitRay.Origin + unitRay.Direction * shared.MaxFollowDistance)
+end
+
+local function stopFollowing()
+	if state.renderConnection then
+		state.renderConnection:Disconnect()
+		state.renderConnection = nil
+	end
+end
+
+local function getCharacterCameraTarget()
+	local character = player.Character or player.CharacterAdded:Wait()
+	local humanoid = character:FindFirstChildOfClass("Humanoid")
+	local rootPart = character:FindFirstChild("HumanoidRootPart")
+	return humanoid, rootPart
+end
+
+local function rememberCamera()
+	local camera = workspace.CurrentCamera
+	if not camera then
+		return false
+	end
+	state.cameraType = camera.CameraType
+	state.cameraSubject = camera.CameraSubject
+	state.cameraCFrame = camera.CFrame
+	return true
+end
+
+local function clearCameraAim()
+	cancelTween(state.cameraAimTween)
+	state.cameraAimTween = nil
+	destroyDriver(state.cameraAimValue, state.cameraAimConnection)
+	state.cameraAimValue = nil
+	state.cameraAimConnection = nil
+end
+
+local function moveCameraToPond()
+	clearCameraAim()
+	local camera = workspace.CurrentCamera
+	if not camera then
+		return
+	end
+	camera.CameraType = Enum.CameraType.Scriptable
+	camera.CFrame = shared.PondCamera.CFrame
+end
+
+local function ensureCameraAimDriver(camera)
+	if state.cameraAimValue and state.cameraAimConnection then
+		return
+	end
+	state.cameraAimValue = Instance.new("CFrameValue")
+	state.cameraAimValue.Value = camera.CFrame
+	state.cameraAimConnection = state.cameraAimValue.Changed:Connect(function(cframe)
+		if state.active and workspace.CurrentCamera then
+			workspace.CurrentCamera.CFrame = cframe
+		end
+	end)
+end
+
+local function getAimedCameraCFrame(camera)
+	local mouse = player:GetMouse()
+	local viewport = camera.ViewportSize
+	local normalizedX = ((mouse.X / math.max(viewport.X, 1)) - 0.5) * 2
+	local normalizedY = ((mouse.Y / math.max(viewport.Y, 1)) - 0.5) * 2
+	local base = shared.PondCamera.CFrame
+	local offset = base.RightVector * (normalizedX * shared.CameraPanStrength) + base.UpVector * (-normalizedY * shared.CameraPanStrength)
+	local position = base.Position + offset
+	local lookAt = position + base.LookVector * 24 + offset * 0.3
+	return CFrame.lookAt(position, lookAt, base.UpVector)
+end
+
+local function tweenCameraAim(camera)
+	ensureCameraAimDriver(camera)
+	cancelTween(state.cameraAimTween)
+	state.cameraAimTween = TweenService:Create(state.cameraAimValue, TweenInfo.new(shared.CameraAimTweenSeconds, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Value = getAimedCameraCFrame(camera),
+	})
+	state.cameraAimTween:Play()
+end
+
+local function getModelTemplate(toolName)
+	return shared.ModelFolder:FindFirstChild(toolName .. " model")
+end
+
+local function clearActiveModel()
+	cancelTween(state.modelTween)
+	state.modelTween = nil
+	destroyDriver(state.modelPivotValue, state.modelPivotConnection)
+	state.modelPivotValue = nil
+	state.modelPivotConnection = nil
+	if state.activeModel then
+		state.activeModel:Destroy()
+		state.activeModel = nil
+	end
+	if shared.ReplaceWithModel:IsA("BasePart") then
+		shared.ReplaceWithModel.LocalTransparencyModifier = 0
+	end
+end
+
+local function ensureActiveModel(toolName)
+	if state.activeModel then
+		return state.activeModel
+	end
+	local template = getModelTemplate(toolName)
+	if not template or not template:IsA("Model") then
+		return nil
+	end
+	local model = template:Clone()
+	for _, descendant in ipairs(model:GetDescendants()) do
+		if descendant:IsA("BasePart") then
+			descendant.Anchored = true
+			descendant.CanCollide = false
+			descendant.Massless = true
+		end
+	end
+	model:PivotTo(shared.ReplaceWithModel.CFrame)
+	model.Parent = shared.PondFolder
+	state.activeModel = model
+	state.modelPivotValue = Instance.new("CFrameValue")
+	state.modelPivotValue.Value = model:GetPivot()
+	state.modelPivotConnection = state.modelPivotValue.Changed:Connect(function(cframe)
+		if state.activeModel then
+			state.activeModel:PivotTo(cframe)
+		end
+	end)
+	shared.ReplaceWithModel.LocalTransparencyModifier = 1
+	return model
+end
+
+local function getIdleModelCFrame(targetPosition)
+	local baseCFrame = shared.ReplaceWithModel.CFrame
+	if not targetPosition then
+		return baseCFrame
+	end
+
+	local flatDirection = Vector3.new(targetPosition.X - baseCFrame.Position.X, 0, targetPosition.Z - baseCFrame.Position.Z)
+	if flatDirection.Magnitude < 0.001 then
+		return baseCFrame
+	end
+
+	local forward = Vector3.new(baseCFrame.LookVector.X, 0, baseCFrame.LookVector.Z)
+	if forward.Magnitude < 0.001 then
+		forward = Vector3.zAxis
+	else
+		forward = forward.Unit
+	end
+
+	local targetForward = flatDirection.Unit
+	local dot = math.clamp(forward:Dot(targetForward), -1, 1)
+	local angle = math.acos(dot)
+	if forward:Cross(targetForward).Y < 0 then
+		angle = -angle
+	end
+
+	return CFrame.new(baseCFrame.Position) * CFrame.Angles(0, angle, 0) * (baseCFrame - baseCFrame.Position)
+end
+
+local function tweenActiveModel(targetCFrame)
+	if not state.activeModel or not state.modelPivotValue then
+		return
+	end
+	cancelTween(state.modelTween)
+	state.modelTween = TweenService:Create(state.modelPivotValue, TweenInfo.new(shared.ModelFollowTweenSeconds, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Value = targetCFrame,
+	})
+	state.modelTween:Play()
+end
+
+local function throwActiveModelAtRing()
+	if not state.activeModel or not state.modelPivotValue then
+		return
+	end
+
+	cancelTween(state.modelTween)
+	state.modelTween = nil
+
+	local travelDriver = state.modelPivotValue
+	local startCFrame = state.activeModel:GetPivot()
+	local targetCFrame = state.lastRingCFrame or shared.DropRing.CFrame
+	local targetPosition = targetCFrame.Position + Vector3.new(0, shared.ModelHoverHeight * 0.16, 0)
+	local startPosition = startCFrame.Position
+	local travelVector = targetPosition - startPosition
+	local distance = travelVector.Magnitude
+	local baseRotation = startCFrame - startCFrame.Position
+	local peakPosition = startPosition:Lerp(targetPosition, 0.5) + Vector3.new(0, math.max(3, distance * 0.12), 0)
+	local peakCFrame = CFrame.new(peakPosition) * baseRotation * CFrame.Angles(math.rad(-18), 0, 0)
+	local landCFrame = CFrame.new(targetPosition) * baseRotation * CFrame.Angles(math.rad(10), 0, 0)
+
+	travelDriver.Value = startCFrame
+
+	state.modelTween = TweenService:Create(travelDriver, TweenInfo.new(shared.ThrowFlightSeconds * 0.58, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Value = peakCFrame,
+	})
+	state.modelTween:Play()
+	state.modelTween.Completed:Wait()
+
+	state.modelTween = TweenService:Create(travelDriver, TweenInfo.new(shared.ThrowFlightSeconds * 0.42, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {
+		Value = landCFrame,
+	})
+	state.modelTween:Play()
+	state.modelTween.Completed:Wait()
+	state.modelTween = nil
+
+	clearActiveModel()
+end
+
+local function panCameraBack()
+	clearCameraAim()
+	local camera = workspace.CurrentCamera
+	if not camera then
+		return
+	end
+	local humanoid, rootPart = getCharacterCameraTarget()
+	local targetCFrame = state.cameraCFrame
+	if rootPart then
+		targetCFrame = CFrame.new(rootPart.Position + Vector3.new(0, 6, 12), rootPart.Position + Vector3.new(0, 2, 0))
+	end
+	camera.CameraType = Enum.CameraType.Scriptable
+	local tween = TweenService:Create(camera, TweenInfo.new(shared.PanBackSeconds, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		CFrame = targetCFrame or camera.CFrame,
+	})
+	tween:Play()
+	tween.Completed:Wait()
+	camera.CameraType = Enum.CameraType.Custom
+	camera.CameraSubject = humanoid or state.cameraSubject
+	if targetCFrame then
+		camera.CFrame = targetCFrame
+	end
+end
+
+local function updateAimingVisuals()
+	local camera = workspace.CurrentCamera
+	if not camera then
+		return
+	end
+	local targetPosition = clampToWater(getMouseTargetPosition(camera))
+	local ringCFrame = CFrame.new(targetPosition) * shared.DropRing.CFrame.Rotation
+	state.lastRingCFrame = ringCFrame
+	shared.RemoteEvent:FireServer("Update", ringCFrame)
+	tweenCameraAim(camera)
+	if state.activeModel then
+		tweenActiveModel(getIdleModelCFrame(targetPosition))
+	end
+end
+
+local function beginFishing(toolName)
+	if state.busy or state.active then
+		return
+	end
+	state.busy = true
+	local ok = shared.RemoteFunction:InvokeServer("Begin")
+	if not ok then
+		state.busy = false
+		return
+	end
+	if not rememberCamera() then
+		shared.RemoteEvent:FireServer("Cancel")
+		state.busy = false
+		return
+	end
+	state.activeToolName = toolName
+	state.lastRingCFrame = shared.DropRing.CFrame
+	ensureActiveModel(toolName)
+	if state.activeModel then
+		state.activeModel:PivotTo(getIdleModelCFrame(state.lastRingCFrame.Position))
+		if state.modelPivotValue then
+			state.modelPivotValue.Value = getIdleModelCFrame(state.lastRingCFrame.Position)
+		end
+	end
+	moveCameraToPond()
+	hideFadeInstant()
+	hidePondUi()
+	setCoreUi(true, false)
+	state.active = true
+	state.busy = false
+	stopFollowing()
+	state.renderConnection = RunService.RenderStepped:Connect(function()
+		if state.active then
+			updateAimingVisuals()
+		end
+	end)
+end
+
+local function cancelFishing()
+	if not state.active or state.busy then
+		return
+	end
+	state.busy = true
+	state.active = false
+	stopFollowing()
+	shared.RemoteEvent:FireServer("Cancel")
+	clearActiveModel()
+	tweenFade(0, shared.FadeSeconds)
+	panCameraBack()
+	hideFadeInstant()
+	hidePondUi()
+	state.activeToolName = nil
+	state.lastRingCFrame = nil
+	state.busy = false
+end
+
+local function finishFishing()
+	if not state.active or state.busy then
+		return
+	end
+	state.busy = true
+	state.active = false
+	stopFollowing()
+	throwActiveModelAtRing()
+	hidePondUi()
+	tweenFade(0, shared.FadeSeconds)
+	shared.RemoteEvent:FireServer("Finish", state.lastRingCFrame or shared.DropRing.CFrame)
+	task.wait(shared.DropDelaySeconds)
+	panCameraBack()
+	hideFadeInstant()
+	waitForReward(2)
+	showRewardCards()
+	hideFadeInstant()
+	state.activeToolName = nil
+	state.lastRingCFrame = nil
+	state.busy = false
+end
+
+local function bindRemoteEvent()
+	if state.remoteBound then
+		return
+	end
+	state.remoteBound = true
+	shared.RemoteEvent.OnClientEvent:Connect(function(action, a, b)
+		if action == "ShopStock" and a == shared.ToolName then
+			getUiRefs().stockLabel.Text = tostring(b) .. " in stock"
+		elseif action == "SellState" and typeof(a) == "table" then
+			updateSellUiRows(getUiRefs(), a)
+		elseif action == "Reward" and typeof(a) == "table" then
+			state.pendingReward = a
+			state.rewardQueue = a
+		end
+	end)
+end
+
+updateSellUiRows = function(ui, sellState)
+	state.sellState = sellState or state.sellState or {}
+	for _, fishState in ipairs(state.sellState) do
+		local row = ui.sellUi:FindFirstChild(fishState.Name)
+		if row then
+			local nameLabel = row:FindFirstChild("name")
+			local amountLabel = row:FindFirstChild("armount") or row:FindFirstChild("stock")
+			local sellButton = row:FindFirstChild("sellbuttons") or row:FindFirstChild("purchasebutton")
+			if nameLabel and nameLabel:IsA("TextLabel") then
+				nameLabel.Text = fishState.Name
+			end
+			if amountLabel and amountLabel:IsA("TextLabel") then
+				amountLabel.Text = tostring(fishState.FishBucks)
+			end
+			if sellButton and sellButton:IsA("TextButton") then
+				sellButton.Text = "Sell(" .. tostring(fishState.Count) .. ")"
+			end
+		end
+	end
+end
+
+local function refreshShopState(ui)
+	local response = shared.RemoteFunction:InvokeServer("ShopState")
+	if response and response.Stock ~= nil then
+		ui.stockLabel.Text = tostring(response.Stock) .. " in stock"
+	else
+		ui.stockLabel.Text = shared.DefaultShopStockText
+	end
+end
+
+local function refreshSellState(ui)
+	local response = shared.RemoteFunction:InvokeServer("SellState")
+	if typeof(response) == "table" then
+		updateSellUiRows(ui, response)
+	end
+end
+
+local function bindSellUi()
+	if state.sellBound then
+		return
+	end
+	state.sellBound = true
+	local ui = getUiRefs()
+	for _, fish in ipairs(shared.FishPool) do
+		local row = ui.sellUi:FindFirstChild(fish.Name)
+		if row then
+			local sellButton = row:FindFirstChild("sellbuttons") or row:FindFirstChild("purchasebutton")
+			if sellButton and sellButton:IsA("TextButton") then
+				sellButton.Activated:Connect(function()
+					local ok = shared.RemoteFunction:InvokeServer("SellFish", { FishName = fish.Name })
+					if not ok then
+						refreshSellState(ui)
+					end
+				end)
+			end
+		end
+	end
+	refreshSellState(ui)
+end
+
+local function bindShopUi()
+	if state.shopBound then
+		return
+	end
+	state.shopBound = true
+	local ui = getUiRefs()
+	ui.backButton.Visible = false
+	ui.backButton.Active = true
+	ui.rewardPanel.Visible = false
+	ui.rewardFrame.Visible = false
+	ui.backButton.Activated:Connect(cancelFishing)
+	ui.purchaseButton.Activated:Connect(function()
+		local ok, stock = shared.RemoteFunction:InvokeServer("ShopPurchase", { ToolName = shared.ToolName })
+		if ok then
+			ui.stockLabel.Text = tostring(stock) .. " in stock"
+		else
+			refreshShopState(ui)
+		end
+	end)
+	refreshShopState(ui)
+end
+
+function module.Init()
+	bindRemoteEvent()
+	bindShopUi()
+	bindSellUi()
+	hideFadeInstant()
+	hidePondUi()
+	clearActiveModel()
+end
+
+function module.Start(tool)
+	module.Init()
+	if not tool or state.boundTools[tool] then
+		return
+	end
+	state.boundTools[tool] = true
+	tool.Activated:Connect(function()
+		if state.active then
+			finishFishing()
+		else
+			beginFishing(tool.Name)
+		end
+	end)
+	tool.Destroying:Connect(function()
+		state.boundTools[tool] = nil
+	end)
+end
+
+return module</code></pre>
+        </div>
+      </div>
+
+      <div class="script-card">
+        <div class="script-header">
+          <div class="script-icon"><i data-lucide="server" color="#fff" width="18"></i></div>
+          <div class="script-title">Legacy Runtime.lua</div>
+          <i data-lucide="chevron-down" class="script-chevron" width="16"></i>
+        </div>
+        <div class="script-body">
+          <button class="copy-code-btn">Copy Code</button>
+          <pre><code class="language-lua">local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local StarterPack = game:GetService("StarterPack")
+local Players = game:GetService("Players")
+
+local sharedModule = ReplicatedStorage:WaitForChild("assets"):WaitForChild("Shared"):WaitForChild("PondDropSharedRuntime")
+local config = require(sharedModule)
+
+local remoteEvent = config.RemoteEvent
+local remoteFunction = config.RemoteFunction
+local dropRing = config.DropRing
+
+local activeByPlayer = {}
+local cooldownByPlayer = {}
+local fishInventoryByPlayer = {}
+local shopStock = {
+	[config.ToolName] = config.ShopBaseStock,
+}
+
+local originalRingState = {
+	CFrame = dropRing.CFrame,
+	Transparency = dropRing.Transparency,
+}
+
+local function ensureFishBucks(player)
+	local leaderstats = player:FindFirstChild("leaderstats")
+	if not leaderstats then
+		leaderstats = Instance.new("Folder")
+		leaderstats.Name = "leaderstats"
+		leaderstats.Parent = player
+	end
+
+	local fishBucks = leaderstats:FindFirstChild("FishBucks")
+	if not fishBucks then
+		fishBucks = Instance.new("IntValue")
+		fishBucks.Name = "FishBucks"
+		fishBucks.Value = 0
+		fishBucks.Parent = leaderstats
+	end
+
+	return fishBucks
+end
+
+local function ensureFishInventory(player)
+	if not fishInventoryByPlayer[player] then
+		fishInventoryByPlayer[player] = {}
+		for _, fish in ipairs(config.FishPool) do
+			fishInventoryByPlayer[player][fish.Name] = 0
+		end
+	end
+	return fishInventoryByPlayer[player]
+end
+
+local function buildSellState(player)
+	local inventory = ensureFishInventory(player)
+	local sellState = {}
+	for _, fish in ipairs(config.FishPool) do
+		sellState[#sellState + 1] = {
+			Name = fish.Name,
+			FishBucks = fish.FishBucks or config.DefaultFishBucks or 0,
+			Count = inventory[fish.Name] or 0,
+		}
+	end
+	return sellState
+end
+
+local function pushSellState(player)
+	remoteEvent:FireClient(player, "SellState", buildSellState(player))
+end
+
+local function setRingVisible(isVisible)
+	dropRing.Anchored = true
+	dropRing.CanCollide = false
+	dropRing.Transparency = isVisible and originalRingState.Transparency or 1
+	if not isVisible then
+		dropRing.CFrame = originalRingState.CFrame
+	end
+end
+
+local function releasePlayer(player)
+	activeByPlayer[player] = nil
+	setRingVisible(false)
+end
+
+local function playerOwnsTool(player, toolName)
+	local character = player.Character
+	local backpack = player:FindFirstChildOfClass("Backpack")
+	for _, container in ipairs({ character, backpack }) do
+		if container and container:FindFirstChild(toolName) then
+			return true
+		end
+	end
+	return false
+end
+
+local function consumeTool(player, toolName)
+	local character = player.Character
+	local backpack = player:FindFirstChildOfClass("Backpack")
+	for _, container in ipairs({ character, backpack }) do
+		if container then
+			local tool = container:FindFirstChild(toolName)
+			if tool and tool:IsA("Tool") then
+				tool:Destroy()
+				return true
+			end
+		end
+	end
+	return false
+end
+
+local function getToolStats(toolName)
+	return config.FishMulti[toolName] or {
+		Strength = 1,
+		LikelyFishAmount = 1,
+		FishChance = 0.5,
+	}
+end
+
+local function rollWeightedFish(targetStrength)
+	local totalWeight = 0
+	local weighted = {}
+	for _, fish in ipairs(config.FishPool) do
+		local distance = math.abs((fish.Strength or 1) - targetStrength)
+		local weight = math.max(1, 12 - distance)
+		weighted[#weighted + 1] = { fish = fish, weight = weight }
+		totalWeight += weight
+	end
+
+	local pick = math.random() * totalWeight
+	local running = 0
+	for _, entry in ipairs(weighted) do
+		running += entry.weight
+		if pick <= running then
+			return entry.fish
+		end
+	end
+
+	return config.FishPool[1]
+end
+
+local function findFishDefinition(fishName)
+	for _, fish in ipairs(config.FishPool) do
+		if fish.Name == fishName then
+			return fish
+		end
+	end
+	return nil
+end
+
+local function buildCaughtFish(toolName)
+	local stats = getToolStats(toolName)
+	local amount = math.max(1, stats.LikelyFishAmount or 1)
+	local results = {}
+	for _ = 1, amount do
+		if math.random() <= (stats.FishChance or 0.5) then
+			results[#results + 1] = rollWeightedFish(stats.Strength or 1).Name
+		else
+			results[#results + 1] = config.FishPool[math.random(1, #config.FishPool)].Name
+		end
+	end
+	return results
+end
+
+local function addCaughtFish(player, caughtFish)
+	local inventory = ensureFishInventory(player)
+	for _, fishName in ipairs(caughtFish) do
+		inventory[fishName] = (inventory[fishName] or 0) + 1
+	end
+	pushSellState(player)
+end
+
+local function sellFish(player, fishName)
+	local inventory = ensureFishInventory(player)
+	if not fishName or (inventory[fishName] or 0) <= 0 then
+		return false, "no_fish"
+	end
+	local fish = findFishDefinition(fishName)
+	if not fish then
+		return false, "bad_fish"
+	end
+	inventory[fishName] -= 1
+	local fishBucks = ensureFishBucks(player)
+	fishBucks.Value += fish.FishBucks or config.DefaultFishBucks or 0
+	pushSellState(player)
+	return true, inventory[fishName], fishBucks.Value
+end
+
+local function broadcastStock()
+	remoteEvent:FireAllClients("ShopStock", config.ToolName, shopStock[config.ToolName] or 0)
+end
+
+remoteFunction.OnServerInvoke = function(player, action, payload)
+	if action == "Begin" then
+		local now = os.clock()
+		local nextAllowed = cooldownByPlayer[player] or 0
+		if now < nextAllowed then
+			return false, "cooldown"
+		end
+		if activeByPlayer[player] then
+			return false, "active"
+		end
+		if not playerOwnsTool(player, config.ToolName) then
+			return false, "missing_tool"
+		end
+		cooldownByPlayer[player] = now + config.CooldownSeconds
+		activeByPlayer[player] = true
+		setRingVisible(true)
+		return true
+	end
+
+	if action == "ShopState" then
+		return {
+			ToolName = config.ToolName,
+			Stock = shopStock[config.ToolName] or 0,
+		}
+	end
+
+	if action == "SellState" then
+		return buildSellState(player)
+	end
+
+	if action == "SellFish" then
+		local fishName = payload and payload.FishName
+		return sellFish(player, fishName)
+	end
+
+	if action == "ShopPurchase" then
+		local toolName = payload and payload.ToolName or config.ToolName
+		if toolName ~= config.ToolName then
+			return false, "bad_tool"
+		end
+		if (shopStock[toolName] or 0) <= 0 then
+			return false, "out_of_stock"
+		end
+		local backpack = player:FindFirstChildOfClass("Backpack")
+		local sourceTool = StarterPack:FindFirstChild(toolName)
+		if not backpack or not sourceTool then
+			return false, "missing_source"
+		end
+		shopStock[toolName] -= 1
+		sourceTool:Clone().Parent = backpack
+		remoteEvent:FireClient(player, "ShopStock", toolName, shopStock[toolName])
+		return true, shopStock[toolName]
+	end
+
+	return false, "bad_action"
+end
+
+remoteEvent.OnServerEvent:Connect(function(player, action, payload)
+	if action == "Update" then
+		if not activeByPlayer[player] or typeof(payload) ~= "CFrame" then
+			return
+		end
+		dropRing.CFrame = payload
+		return
+	end
+
+	if action == "Cancel" then
+		if activeByPlayer[player] then
+			releasePlayer(player)
+		end
+		return
+	end
+
+	if action == "Finish" then
+		if not activeByPlayer[player] then
+			return
+		end
+		if typeof(payload) == "CFrame" then
+			dropRing.CFrame = payload
+		end
+		local reward = buildCaughtFish(config.ToolName)
+		consumeTool(player, config.ToolName)
+		addCaughtFish(player, reward)
+		remoteEvent:FireClient(player, "Reward", reward, config.ToolName)
+		releasePlayer(player)
+	end
+end)
+
+Players.PlayerAdded:Connect(function(player)
+	ensureFishBucks(player)
+	ensureFishInventory(player)
+	pushSellState(player)
+end)
+
+for _, player in ipairs(Players:GetPlayers()) do
+	ensureFishBucks(player)
+	ensureFishInventory(player)
+	pushSellState(player)
+end
+
+Players.PlayerRemoving:Connect(function(player)
+	activeByPlayer[player] = nil
+	cooldownByPlayer[player] = nil
+	fishInventoryByPlayer[player] = nil
+end)
+
+task.spawn(function()
+	while true do
+		shopStock[config.ToolName] = config.ShopBaseStock
+		broadcastStock()
+		task.wait(config.ShopRestockSeconds)
+	end
+end)
+
+setRingVisible(false)
+
+return true</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-signoff">hi ;)</div>
+  </section>
+
 </main>
+
+
+<div id="ux-lightbox" class="lightbox" aria-hidden="true">
+  <img id="ux-lightbox-image" alt="Expanded UX screenshot">
+</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-lua.min.js"></script>
 <script>
 lucide.createIcons();
+
+
+const gate = document.getElementById('portfolio-gate');
+const landingBg = document.getElementById('landing-bg');
+const uxView = document.getElementById('ux-view');
+const scriptView = document.getElementById('script-view');
+const uxGallery = document.getElementById('ux-gallery');
+const showMoreUx = document.getElementById('show-more-ux');
+const uxLightbox = document.getElementById('ux-lightbox');
+const uxLightboxImage = document.getElementById('ux-lightbox-image');
+
+const HOLD_DURATION = 2000;
+const DOT_COUNT = 20;
+
+let uxScreenshots = [];
+let uxLoaded = 0;
+const UX_INITIAL = 4;
+const UX_BATCH = 4;
+
+// Natural sort for filenames like Screenshot_1, Screenshot_2, Screenshot_10
+function naturalSort(a, b) {
+  const numA = parseInt(a.match(/\d+/)?.[0] || '0', 10);
+  const numB = parseInt(b.match(/\d+/)?.[0] || '0', 10);
+  return numA - numB;
+}
+
+// Fetch screenshots from GitHub API
+async function fetchUxScreenshots() {
+  try {
+    const res = await fetch('https://api.github.com/repos/6px7/portfolio/contents');
+    if (!res.ok) throw new Error('Failed to fetch');
+    const data = await res.json();
+    const screenshots = data
+      .filter(item => item.type === 'file' && item.name.startsWith('Screenshot_') && item.name.endsWith('.png'))
+      .map(item => item.name)
+      .sort(naturalSort);
+    return screenshots;
+  } catch (e) {
+    console.warn('Failed to fetch screenshots from GitHub, falling back to empty list', e);
+    return [];
+  }
+}
+
+function addUxShots(amount) {
+  if (!uxGallery || uxScreenshots.length === 0) return;
+  const nextCount = Math.min(uxLoaded + amount, uxScreenshots.length);
+
+  for (let i = uxLoaded; i < nextCount; i += 1) {
+    const filename = uxScreenshots[i];
+    const shot = document.createElement('button');
+    shot.className = 'ux-shot';
+    shot.type = 'button';
+    shot.setAttribute('aria-label', `Expand screenshot ${i + 1}`);
+    const imgUrl = `https://raw.githubusercontent.com/6px7/portfolio/main/${filename}`;
+    shot.innerHTML = `
+      <img src="${imgUrl}" alt="UX screenshot ${i + 1}" loading="lazy">
+      <span class="ux-expand"><i data-lucide="maximize-2" width="18"></i>&nbsp; Click to expand</span>
+    `;
+    shot.addEventListener('click', () => {
+      uxLightboxImage.src = imgUrl;
+      uxLightbox.classList.add('open');
+      uxLightbox.setAttribute('aria-hidden', 'false');
+    });
+    uxGallery.appendChild(shot);
+  }
+
+  uxLoaded = nextCount;
+  if (showMoreUx) {
+    showMoreUx.hidden = uxLoaded >= uxScreenshots.length;
+  }
+  lucide.createIcons();
+}
+
+function selectPortfolio(view) {
+  gate.hidden = true;
+  if (landingBg) landingBg.style.display = 'none';
+  uxView.hidden = view !== 'ux';
+  scriptView.hidden = view !== 'script';
+
+  if (view === 'ux' && uxLoaded === 0) addUxShots(UX_INITIAL);
+  window.scrollTo({ top: 0, behavior: 'instant' });
+}
+
+// ===== HOLD INTERACTION =====
+function setupHoldButton(button) {
+  const dotTrack = button.querySelector('.dot-track');
+  if (!dotTrack) return;
+
+  // Create dots
+  for (let i = 0; i < DOT_COUNT; i++) {
+    const dot = document.createElement('span');
+    dot.className = 'dot';
+    dotTrack.appendChild(dot);
+  }
+  const dots = dotTrack.querySelectorAll('.dot');
+
+  let holdTimer = null;
+  let holdStartTime = 0;
+  let animFrame = null;
+  let isHolding = false;
+
+  function startHold(e) {
+    if (e) e.preventDefault();
+    if (isHolding) return;
+    isHolding = true;
+    holdStartTime = Date.now();
+    button.classList.add('holding');
+
+    // Reset dots
+    dots.forEach(d => d.classList.remove('filled'));
+
+    function updateDots() {
+      if (!isHolding) return;
+      const elapsed = Date.now() - holdStartTime;
+      const progress = Math.min(elapsed / HOLD_DURATION, 1);
+      const filledCount = Math.floor(progress * DOT_COUNT);
+
+      dots.forEach((d, idx) => {
+        if (idx < filledCount) {
+          d.classList.add('filled');
+        } else {
+          d.classList.remove('filled');
+        }
+      });
+
+      if (progress >= 1) {
+        // Hold complete!
+        isHolding = false;
+        button.classList.remove('holding');
+        button.classList.add('success');
+        setTimeout(() => {
+          button.classList.remove('success');
+          selectPortfolio(button.dataset.view);
+        }, 200);
+        return;
+      }
+
+      animFrame = requestAnimationFrame(updateDots);
+    }
+
+    animFrame = requestAnimationFrame(updateDots);
+  }
+
+  function endHold(e) {
+    if (e) e.preventDefault();
+    if (!isHolding) return;
+    isHolding = false;
+    button.classList.remove('holding');
+    if (animFrame) {
+      cancelAnimationFrame(animFrame);
+      animFrame = null;
+    }
+    // Reset dots
+    dots.forEach(d => d.classList.remove('filled'));
+  }
+
+  // Mouse events
+  button.addEventListener('mousedown', startHold);
+  button.addEventListener('mouseup', endHold);
+  button.addEventListener('mouseleave', endHold);
+
+  // Touch events
+  button.addEventListener('touchstart', startHold, { passive: true });
+  button.addEventListener('touchend', endHold, { passive: true });
+  button.addEventListener('touchcancel', endHold, { passive: true });
+}
+
+// Initialize gate buttons
+document.querySelectorAll('.gate-choice').forEach(setupHoldButton);
+
+// Load screenshots on page load
+(async function init() {
+  uxScreenshots = await fetchUxScreenshots();
+  // If total screenshots <= initial batch, hide show more button
+  if (showMoreUx && uxScreenshots.length <= UX_INITIAL) {
+    showMoreUx.hidden = true;
+  }
+})();
+
+if (showMoreUx) {
+  showMoreUx.addEventListener('click', () => addUxShots(UX_BATCH));
+}
+
+if (uxLightbox) {
+  uxLightbox.addEventListener('click', () => {
+    uxLightbox.classList.remove('open');
+    uxLightbox.setAttribute('aria-hidden', 'true');
+    uxLightboxImage.removeAttribute('src');
+  });
+}
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && uxLightbox?.classList.contains('open')) {
+    uxLightbox.click();
+  }
+});
+
 
 const html = document.documentElement;
 const themeToggle=document.getElementById('theme-toggle');
